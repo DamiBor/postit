@@ -21,6 +21,14 @@ def init_db():
 def fill_db_test():
     add_note("Tu devrais jouer à Ys 1")
     add_note("Bon outil pour le dessin : Krita")
+    add_note("Tu devrais jouer à Ys 2")
+    add_note("Il me faut une note avec des accents")
+    add_note("à quoi bon élever les côtes")
+    add_note("C'est un bon prix ça 15€ ?")
+    add_note("Tu devrais jouer à Ys 1")
+    add_note("Bon outil pour le dessin : Krita")
+    add_note("Tu devrais jouer à Ys 1")
+    add_note("Bon outil pour le dessin : Krita")
 
 # Add a new note in the database with given content
 def add_note(content):
