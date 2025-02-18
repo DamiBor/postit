@@ -7,6 +7,8 @@
 </head>
 <body>
    <h1>Welcome to the Post-it app for Twitch</h1>
-   <h1>(Hello World !))</h1>
+   {% for note in notes %}
+       <h1>{{ note['content'] }}</h1>
+   {% endfor %}
 </body>
 </html>
