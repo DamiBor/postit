@@ -1,11 +1,5 @@
-import sqlite3
 from flask import Flask, render_template
-
-# Create and return a connection to the database
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+from db import get_db_connection, get_all_notes
 
 # Flask application creation
 app = Flask(__name__)
@@ -14,8 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     conn = get_db_connection()
-    notes = conn.execute('SELECT * FROM notes').fetchall()
-    conn.close()
+    notes = get_all_notes()
     return render_template('index.html', notes=notes)
 
 # Run the flask app if this file is executed as main
