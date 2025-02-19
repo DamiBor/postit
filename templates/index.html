@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
     <title>Post-It</title>
+    
 </head>
 <body>
-    <ul>
+    <ul id="notes">
         {% for note in notes %}
         <li>
             <a href="#">
@@ -15,5 +16,44 @@
         </li>
         {% endfor %}
     </ul>
+    <input type="text" id="message">
+    <button onclick="sendMessage()">Send</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var socket = io();
+            socket.on('connect', function() {
+                console.log('Connected to server');
+            });
+            
+            socket.on('disconnect', function() {
+                console.log('Disconnected from server');
+            });
+
+            socket.on("note_added", (data) => {
+                console.log("new note");
+                console.log(data);
+
+                var p = document.createElement("p");
+                p.innerText = data;
+
+                var a = document.createElement("a");
+                a.setAttribute('href', "#");
+                a.appendChild(p);
+
+                var li = document.createElement("li");
+                li.appendChild(a);
+
+                var ul = document.getElementById("notes");
+                ul.appendChild(li);
+            });
+        });
+        function sendMessage() {
+            var socket = io();
+            var msg = document.getElementById('message').value;
+            socket.emit("create_note", msg);
+        }
+    </script>
 </body>
 </html>
