@@ -1,4 +1,5 @@
 import sqlite3
+from websocket import emit_note_added
 
 DB_FILE = "database.db"
 SQL_FILE = "schema.sql"
@@ -37,6 +38,7 @@ def add_note(content):
     cur.execute("INSERT INTO notes (content) VALUES (?)", (content,))
     connection.commit()
     connection.close()
+    emit_note_added(content)
 
 # Return all elements of the notes table as a list
 def get_all_notes():
