@@ -4,21 +4,6 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
     <title>Post-It</title>
-    
-</head>
-<body>
-    <ul id="notes">
-        {% for note in notes %}
-        <li>
-            <a href="#">
-                <p>{{ note['content'] }}</p>
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-    <input type="text" id="message">
-    <button onclick="sendMessage()">Send</button>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
@@ -49,11 +34,17 @@
                 ul.appendChild(li);
             });
         });
-        function sendMessage() {
-            var socket = io();
-            var msg = document.getElementById('message').value;
-            socket.emit("create_note", msg);
-        }
     </script>
+</head>
+<body>
+    <ul id="notes">
+        {% for note in notes %}
+        <li>
+            <a href="#">
+                <p>{{ note['content'] }}</p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
