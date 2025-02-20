@@ -32,12 +32,19 @@
 
                 var ul = document.getElementById("notes");
                 ul.appendChild(li);
+                ul.style.visibility = "visible"
+                window.setTimeout(hideNotes, 10000);
             });
         });
+        function hideNotes()
+        {
+            var ul = document.getElementById("notes");
+            ul.style.visibility = "hidden"
+        }
     </script>
 </head>
 <body>
-    <ul id="notes">
+    <ul id="notes" style="visibility: hidden;">
         {% for note in notes %}
         <li>
             <a href="#">
