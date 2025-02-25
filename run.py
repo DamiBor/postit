@@ -1,9 +1,19 @@
 import asyncio
+import argparse
 from flask import Flask, render_template, request
-from db import get_db_connection, get_all_notes
+from db import get_all_notes, init_db
 from websocket import socketio
 from twitch import TwitchChatBot
-from config import AUTH_TYPE, AuthType
+from config import AUTH_TYPE, AuthType, NOTES_VISIBILITY, NOTES_DISPLAY_TIME
+
+
+# Handle command line options
+parser = argparse.ArgumentParser()
+parser.add_argument("-fdb", "--ForceInitDB", help = "Force the reinitatialisation of the database, clering the previous content.", action='store_true')
+args = parser.parse_args()
+
+# Database initialization
+init_db(args.ForceInitDB)
 
 # Flask application and socketio server creation
 app = Flask(__name__)
@@ -29,9 +39,8 @@ def index():
         asyncio.run(chatbot.init_twitch_chat(request.args["code"]))
 
     # Get all existing notes in db and render index.html with them as param
-    conn = get_db_connection()
     notes = get_all_notes()
-    return render_template('index.html', notes=notes)
+    return render_template('index.html', notes=notes, notes_vis=NOTES_VISIBILITY, notes_disp_time=NOTES_DISPLAY_TIME)
 
 # Run the flask app if this file is executed as main
 if __name__ == "__main__":
