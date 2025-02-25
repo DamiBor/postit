@@ -8,6 +8,7 @@ from db import add_note
 
 MY_URL = "http://localhost:17563"
 
+# Class implementing a twitch chat bot using twitch API, also manages the twitch authentication
 class TwitchChatBot():
 
     def __init__(self):

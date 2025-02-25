@@ -12,7 +12,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-fdb", "--ForceInitDB", help = "Force the reinitatialisation of the database, clering the previous content.", action='store_true')
 args = parser.parse_args()
 
-
 # Database initialization
 init_db(args.ForceInitDB)
 
