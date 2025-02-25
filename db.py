@@ -1,7 +1,8 @@
 import sqlite3
 from websocket import emit_note_added
+from config import DB_FILE
+import os.path
 
-DB_FILE = "database.db"
 SQL_FILE = "schema.sql"
 
 # Create and return a connection to the database with access to the column by name
@@ -10,8 +11,13 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+# Create the database file if it doesn't exist or if the force option is set
+def init_db(force=False):
+    if not os.path.exists(DB_FILE) or force:
+        create_db()
+
 # Initialize the databse content from the schema.sql file
-def init_db():
+def create_db():
     connection = get_db_connection()
     with open(SQL_FILE) as f:
         connection.executescript(f.read())
