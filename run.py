@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 from db import get_all_notes, init_db
 from websocket import socketio
 from twitch import TwitchChatBot
-from config import AUTH_TYPE, AuthType
+from config import AUTH_TYPE, AuthType, NOTES_VISIBILITY, NOTES_DISPLAY_TIME
 
 
 # Handle command line options
@@ -41,7 +41,7 @@ def index():
 
     # Get all existing notes in db and render index.html with them as param
     notes = get_all_notes()
-    return render_template('index.html', notes=notes)
+    return render_template('index.html', notes=notes, notes_vis=NOTES_VISIBILITY, notes_disp_time=NOTES_DISPLAY_TIME)
 
 # Run the flask app if this file is executed as main
 if __name__ == "__main__":
